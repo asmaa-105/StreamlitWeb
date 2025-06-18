@@ -1,0 +1,32 @@
+name: Validate Event Payloads
+
+on:
+  workflow_run:
+    types: [requested, completed]
+  check_run:
+    types: [created, rerequested, completed]
+
+jobs:
+  validate-payloads:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate `workflow_run` payload
+        if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run == null }}
+        run: |
+          echo "::error ::workflow_run payload is null – aborting."
+          exit 1
+
+      - name: Validate `check_run` payload
+        if: ${{ github.event_name == 'check_run' && github.event.check_run == null }}
+        run: |
+          echo "::error ::check_run payload is null – aborting."
+          exit 1
+
+      - name: Dump full event payload
+        run: |
+          echo "=== Event: ${{ github.event_name }} ==="
+          echo "${{ toJson(github.event) }}"
