@@ -47,6 +47,9 @@ def crop_image(file_path, box):
     cropped_image = image.crop(box)
     return cropped_image
 
+def greeting(name):
+    return f"Hello from module2, {name}!"
+
 # Streamlit app
 def main():
     st.title('Welcome to my AI project')
