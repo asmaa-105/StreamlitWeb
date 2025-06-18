@@ -48,7 +48,7 @@ def crop_image(file_path, box):
     return cropped_image
 
 def greeting(name):
-    return f"Hello from module2, {name}!"
+    return f"Hello module2, {name}!"
 
 # Streamlit app
 def main():
